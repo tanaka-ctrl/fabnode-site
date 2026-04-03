@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | FABNODE - CNC WORKS YOKOHAMA</title>
+<meta name="description" content="FABNODE CNC加工のお問い合わせ・見積もり依頼。DXFファイルのアップロードにも対応。">
+<style>
+  :root {
+    --navy:  #0D1B2A; --navy2: #1B2E45; --navy3: #1E3A5F;
+    --cyan:  #00C2E0; --cyan2: #0096B0;
+    --ow:    #F0F4F8; --lgray: #8CA0B5; --dgray: #2C3E55;
+    --border:#C8D8E8; --white: #ffffff; --black: #0A1628;
+    --red:   #FF6B6B;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Helvetica Neue',Helvetica,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:var(--black);background:var(--navy);line-height:1.7;min-height:100vh}
+
+  /* ─── Nav ─── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,27,42,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,194,224,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:56px}
+  .nav-logo{font-size:18px;font-weight:700;letter-spacing:.14em;color:var(--white);text-decoration:none}
+  .nav-logo span{color:var(--cyan)}
+  .nav-back{color:var(--lgray);font-size:12px;letter-spacing:.06em;text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
+  .nav-back:hover{color:var(--cyan)}
+  .nav-back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ─── Hero ─── */
+  .page-hero{padding:112px 8% 48px;position:relative;overflow:hidden}
+  .page-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,var(--navy3) 100%)}
+  .page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,194,224,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,194,224,0.04) 1px,transparent 1px);background-size:40px 40px}
+  .page-hero-content{position:relative;z-index:2;max-width:640px}
+  .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .eyebrow-line{width:24px;height:1px;background:var(--cyan)}
+  .eyebrow-text{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-family:'Helvetica Neue',sans-serif}
+  .page-title{font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--white);line-height:1.3;margin-bottom:10px}
+  .page-title em{font-style:normal;color:var(--cyan)}
+  .page-sub{font-size:14px;color:var(--lgray)}
+
+  /* ─── Form Section ─── */
+  .form-section{padding:0 8% 80px;position:relative;z-index:2}
+  .form-container{max-width:720px;margin:0 auto;background:var(--white);border-radius:4px;box-shadow:0 4px 40px rgba(0,0,0,0.3);overflow:hidden;margin-top:-12px}
+
+  /* ─── Form Body ─── */
+  .form-body{padding:36px 40px 40px}
+  .form-row{margin-bottom:22px}
+  .form-row-half{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+  label{display:block;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:6px}
+  label .req{color:var(--cyan);margin-left:4px;font-size:10px}
+  label .opt{color:var(--lgray);margin-left:4px;font-size:10px;font-weight:400}
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  textarea,
+  select{
+    width:100%;padding:11px 14px;font-size:14px;font-family:inherit;
+    border:1px solid var(--border);border-radius:3px;background:var(--white);
+    color:var(--black);transition:border-color .2s,box-shadow .2s;
+    line-height:1.5;
+  }
+  input:focus,textarea:focus,select:focus{
+    outline:none;border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(0,194,224,0.12);
+  }
+  textarea{resize:vertical;min-height:120px}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238CA0B5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+
+  /* ─── Checkbox Group ─── */
+  .check-group{display:flex;flex-wrap:wrap;gap:8px}
+  .check-item{position:relative}
+  .check-item input{position:absolute;opacity:0;width:0;height:0}
+  .check-item label{display:flex;align-items:center;padding:8px 16px;border:1px solid var(--border);border-radius:3px;font-size:13px;font-weight:500;color:var(--dgray);cursor:pointer;transition:all .2s;margin-bottom:0}
+  .check-item input:checked + label{border-color:var(--cyan);background:rgba(0,194,224,0.06);color:var(--navy)}
+  .check-item label:hover{border-color:var(--cyan);background:rgba(0,194,224,0.03)}
+
+  /* ─── File Upload ─── */
+  .upload-area{border:2px dashed var(--border);border-radius:4px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--ow)}
+  .upload-area:hover,.upload-area.dragover{border-color:var(--cyan);background:rgba(0,194,224,0.04)}
+  .upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .upload-icon{margin:0 auto 10px;width:36px;height:36px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center}
+  .upload-icon svg{width:18px;height:18px;fill:none;stroke:var(--cyan);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .upload-text{font-size:13px;color:var(--dgray);font-weight:600;margin-bottom:4px}
+  .upload-hint{font-size:11px;color:var(--lgray)}
+  .file-list{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--white);border:1px solid var(--border);border-radius:3px;font-size:12px}
+  .file-item-name{color:var(--navy);font-weight:600;display:flex;align-items:center;gap:6px}
+  .file-item-size{color:var(--lgray);font-size:11px}
+  .file-remove{background:none;border:none;color:var(--lgray);cursor:pointer;font-size:16px;padding:0 4px;transition:color .2s}
+  .file-remove:hover{color:var(--red)}
+
+  /* ─── Newsletter Opt-in ─── */
+  .optin-row{margin-top:8px;margin-bottom:24px;padding:14px 16px;background:var(--ow);border-radius:4px;border:1px solid var(--border)}
+  .optin-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--dgray);line-height:1.6;margin-bottom:0}
+  .optin-label input[type="checkbox"]{width:18px;height:18px;margin-top:2px;accent-color:var(--cyan);cursor:pointer;flex-shrink:0}
+  .optin-hint{font-size:11px;color:var(--lgray);margin-top:4px;padding-left:28px}
+
+  /* ─── Submit ─── */
+  .form-submit{margin-top:32px}
+  .submit-btn{width:100%;padding:15px 32px;background:var(--cyan);color:var(--navy);font-size:15px;font-weight:700;letter-spacing:.08em;border:none;border-radius:3px;cursor:pointer;transition:all .2s;font-family:inherit}
+  .submit-btn:hover{background:var(--cyan2);color:var(--white)}
+  .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+  .submit-note{text-align:center;margin-top:14px;font-size:11px;color:var(--lgray)}
+  .submit-note a{color:var(--cyan);text-decoration:none}
+
+  /* ─── Info Bar ─── */
+  .info-bar{background:var(--navy2);border-top:1px solid rgba(0,194,224,0.1);padding:20px 40px;display:flex;flex-wrap:wrap;gap:24px}
+  .info-bar-item{font-size:12px;color:var(--lgray);display:flex;align-items:center;gap:8px}
+  .info-bar-item svg{width:14px;height:14px;flex-shrink:0;fill:none;stroke:var(--cyan);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .info-bar-item a{color:var(--cyan);text-decoration:none}
+
+  /* ─── Footer ─── */
+  footer{background:#06111E;color:var(--lgray);text-align:center;padding:20px 8%;font-size:11px;letter-spacing:.06em;border-top:1px solid rgba(0,194,224,0.15)}
+  footer a{color:var(--cyan);text-decoration:none}
+
+  /* ─── Toast ─── */
+  .toast{position:fixed;top:72px;right:20px;padding:16px 24px;border-radius:4px;font-size:14px;font-weight:600;z-index:200;transform:translateX(120%);transition:transform .3s ease;max-width:360px}
+  .toast.show{transform:translateX(0)}
+  .toast.success{background:#0D3D2E;color:#4ADE80;border:1px solid rgba(74,222,128,0.3)}
+  .toast.error{background:#3D0D0D;color:var(--red);border:1px solid rgba(255,107,107,0.3)}
+
+  /* ─── Responsive ─── */
+  @media(max-width:768px){
+    nav{padding:0 4%}
+    .page-hero{padding:100px 5% 36px}
+    .form-section{padding:0 4% 60px}
+    .form-body{padding:24px 20px 28px}
+    .form-row-half{grid-template-columns:1fr}
+    .info-bar{padding:16px 20px;gap:14px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="index.html">FAB<span>NODE</span></a>
+  <a class="nav-back" href="index.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    トップに戻る
+  </a>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Contact</div></div>
+    <h1 class="page-title">お問い合わせ・<em>見積もり依頼</em></h1>
+    <p class="page-sub">図面（DXF/PDF/画像）をお持ちの場合はそのまま添付できます。通常24時間以内にご回答します。</p>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section">
+  <div class="form-container">
+
+    <!-- Form -->
+    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+      <div class="form-body">
+
+        <!-- お問い合わせの種類 -->
+        <div class="form-row">
+          <label>お問い合わせの種類<span class="req">*必須</span></label>
+          <select name="inquiry_type" id="inquiryType" required onchange="onInquiryTypeChange(this.value)">
+            <option value="見積もり依頼">見積もり依頼</option>
+            <option value="加工相談・質問">加工相談・質問</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <!-- 会社名 / お名前 -->
+        <div class="form-row-half">
+          <div>
+            <label>会社名 / 屋号<span class="req">*必須</span></label>
+            <input type="text" name="company" required placeholder="例：株式会社サンプル工務店">
+          </div>
+          <div>
+            <label>お名前<span class="req">*必須</span></label>
+            <input type="text" name="name" required placeholder="例：山田 太郎">
+          </div>
+        </div>
+
+        <!-- メール / 電話 -->
+        <div class="form-row-half">
+          <div>
+            <label>メールアドレス<span class="req">*必須</span></label>
+            <input type="email" name="email" required placeholder="例：info@example.com">
+          </div>
+          <div>
+            <label>電話番号<span class="opt">任意</span></label>
+            <input type="tel" name="phone" placeholder="例：045-000-0000">
+          </div>
+        </div>
+
+        <!-- 加工の種類 -->
+        <div class="form-row" id="processingTypeRow">
+          <label>加工の種類<span class="opt">任意・複数選択可</span></label>
+          <div class="check-group">
+            <div class="check-item">
+              <input type="checkbox" name="processing_type" value="2Dカット" id="p1">
+              <label for="p1">2Dカット</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" name="processing_type" value="3D加工" id="p2">
+              <label for="p2">3D加工</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" name="processing_type" value="文字・サイン" id="p3">
+              <label for="p3">文字・サイン</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" name="processing_type" value="建築・造作" id="p4">
+              <label for="p4">建築・造作</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" name="processing_type" value="その他" id="p5">
+              <label for="p5">その他</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 素材 / 納期 -->
+        <div class="form-row-half" id="materialDeadlineRow">
+          <div>
+            <label>素材の希望<span class="opt">任意</span></label>
+            <select name="material">
+              <option value="">選択してください</option>
+              <option value="合板（シナ）">合板（シナ）</option>
+              <option value="合板（ラワン）">合板（ラワン）</option>
+              <option value="合板（針葉樹）">合板（針葉樹）</option>
+              <option value="MDF">MDF</option>
+              <option value="カラーMDF">カラーMDF</option>
+              <option value="ランバーコア">ランバーコア</option>
+              <option value="集成材（タモ）">集成材（タモ）</option>
+              <option value="集成材（オーク）">集成材（オーク）</option>
+              <option value="無垢材">無垢材（要相談）</option>
+              <option value="持ち込み">持ち込み希望</option>
+              <option value="相談したい">相談したい</option>
+            </select>
+          </div>
+          <div>
+            <label>希望納期<span class="opt">任意</span></label>
+            <input type="date" name="deadline">
+          </div>
+        </div>
+
+        <!-- ファイルアップロード -->
+        <div class="form-row" id="fileUploadRow">
+          <label>ファイル添付<span class="opt">任意・DXF/PDF/画像対応</span></label>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" name="attachment" id="fileInput" multiple accept=".dxf,.pdf,.ai,.jpg,.jpeg,.png,.svg,.dwg,.zip">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            </div>
+            <div class="upload-text">ファイルをドラッグ＆ドロップ、またはクリックして選択</div>
+            <div class="upload-hint">DXF / PDF / AI / JPG / PNG / SVG / DWG / ZIP（各10MBまで）</div>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </div>
+
+        <!-- お問い合わせ内容 -->
+        <div class="form-row">
+          <label>お問い合わせ内容<span class="req">*必須</span></label>
+          <textarea name="message" required placeholder="加工内容・サイズ・数量・ご質問など、お気軽にご記入ください。"></textarea>
+        </div>
+
+        <!-- Newsletter Opt-in -->
+        <div class="optin-row">
+          <label class="optin-label">
+            <input type="checkbox" name="newsletter" value="希望する" checked>
+            FABNODEからのお知らせ（新サービス・キャンペーン等）を受け取る
+          </label>
+          <p class="optin-hint">※ 配信頻度は月1回程度です。いつでも解除できます。</p>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-submit">
+          <button type="submit" class="submit-btn" id="submitBtn">送信する</button>
+          <p class="submit-note">または <a href="mailto:info@fs-kokkok.com">info@fs-kokkok.com</a> まで直接ご連絡ください</p>
+        </div>
+
+      </div>
+
+      <!-- Info Bar -->
+      <div class="info-bar">
+        <div class="info-bar-item">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          横浜市港北区
+        </div>
+        <div class="info-bar-item">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          ShopBot CNC（2440×1220mm）
+        </div>
+        <div class="info-bar-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          通常24時間以内にご回答
+        </div>
+        <div class="info-bar-item">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+          <a href="mailto:info@fs-kokkok.com">info@fs-kokkok.com</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© FABNODE / CNC WORKS YOKOHAMA &nbsp;|&nbsp; <a href="mailto:info@fs-kokkok.com">info@fs-kokkok.com</a> &nbsp;|&nbsp; Yokohama, Japan</p>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── Inquiry type switching ───
+  function onInquiryTypeChange(value) {
+    const processingRow = document.getElementById('processingTypeRow');
+    const materialRow = document.getElementById('materialDeadlineRow');
+    const fileRow = document.getElementById('fileUploadRow');
+
+    if (value === 'その他') {
+      processingRow.style.display = 'none';
+      materialRow.style.display = 'none';
+      fileRow.style.display = 'none';
+    } else {
+      processingRow.style.display = '';
+      materialRow.style.display = '';
+      fileRow.style.display = '';
+    }
+  }
+
+  // ─── File Upload ───
+  const uploadArea = document.getElementById('uploadArea');
+  const fileInput = document.getElementById('fileInput');
+  const fileList = document.getElementById('fileList');
+  let selectedFiles = [];
+
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+  });
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => {
+    handleFiles(fileInput.files);
+  });
+
+  function handleFiles(files) {
+    for (const file of files) {
+      if (file.size > 10 * 1024 * 1024) {
+        showToast('ファイルサイズは10MB以下にしてください: ' + file.name, 'error');
+        continue;
+      }
+      if (selectedFiles.length >= 5) {
+        showToast('ファイルは最大5つまでです', 'error');
+        break;
+      }
+      selectedFiles.push(file);
+    }
+    renderFileList();
+  }
+
+  function renderFileList() {
+    fileList.innerHTML = '';
+    selectedFiles.forEach((file, i) => {
+      const ext = file.name.split('.').pop().toUpperCase();
+      const size = file.size < 1024 ? file.size + ' B'
+        : file.size < 1048576 ? (file.size / 1024).toFixed(1) + ' KB'
+        : (file.size / 1048576).toFixed(1) + ' MB';
+      const item = document.createElement('div');
+      item.className = 'file-item';
+      item.innerHTML = `
+        <span class="file-item-name"><strong style="color:var(--cyan);font-size:10px;margin-right:4px">${ext}</strong>${file.name}</span>
+        <span style="display:flex;align-items:center;gap:10px">
+          <span class="file-item-size">${size}</span>
+          <button type="button" class="file-remove" onclick="removeFile(${i})">×</button>
+        </span>`;
+      fileList.appendChild(item);
+    });
+
+    // Update the real file input with a DataTransfer
+    const dt = new DataTransfer();
+    selectedFiles.forEach(f => dt.items.add(f));
+    fileInput.files = dt.files;
+  }
+
+  function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    renderFileList();
+  }
+
+  // ─── Form Submit ───
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // File attachment check for estimate & consult tabs
+    const currentTab = document.getElementById('inquiryType').value;
+    if ((currentTab === '見積もり依頼' || currentTab === '加工相談・質問') && selectedFiles.length === 0) {
+      if (!confirm('図面・資料が添付されていません。\n添付があるとより正確なご回答が可能です。\n\nこのまま送信しますか？')) {
+        return;
+      }
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中...';
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        showToast('送信が完了しました。24時間以内にご連絡します。', 'success');
+        form.reset();
+        selectedFiles = [];
+        renderFileList();
+        document.querySelectorAll('.form-tab')[0].click();
+      } else {
+        throw new Error('送信に失敗しました');
+      }
+    } catch (err) {
+      showToast('送信に失敗しました。メールでお問い合わせください。', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    }
+  });
+
+  // ─── Toast ───
+  function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+</script>
+</body>
+</html>
