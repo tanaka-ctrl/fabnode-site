@@ -52,36 +52,37 @@
   <!-- Service / Features -->
   <section class="section features" id="service">
     <div class="container">
+      <span class="section-eyebrow">SERVICE</span>
       <h2 class="section-title">FABNODEのCNC加工</h2>
       <p class="section-subtitle">DXFデータから加工まで、まとめてお任せいただけます</p>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">📐</div>
+          <span class="feature-tag">DATA<i></i><i></i><i></i></span>
           <h3>DXFデータ対応</h3>
           <p>CADで作成したDXFデータをそのまま加工。データ作成のご相談も承ります。図面からのデータ起こしも対応可能です。</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🪵</div>
+          <span class="feature-tag">MATERIAL<i></i><i></i><i></i></span>
           <h3>材料調達もおまかせ</h3>
           <p>合板・MDF・集成材など、材料の手配から加工までワンストップ。発注・搬入の手間を省けます。</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">⚡</div>
+          <span class="feature-tag">SPEED<i></i><i></i><i></i></span>
           <h3>小ロット・最短翌日</h3>
           <p>1枚からOK。試作やワンオフ家具にも柔軟に対応。特急対応もご相談ください。</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🔧</div>
+          <span class="feature-tag">MACHINING<i></i><i></i><i></i></span>
           <h3>多彩な加工</h3>
           <p>輪郭切り出し・ポケット加工・Vビット彫刻・ドリル・名栗加工。複雑な形状もCNCなら正確に再現します。</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">📦</div>
+          <span class="feature-tag">PICKUP<i></i><i></i><i></i></span>
           <h3>直接引き取りOK</h3>
           <p>横浜・川崎エリアなら工房まで直接引き取りに来ていただけます。梱包・発送費が不要です。</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">💬</div>
+          <span class="feature-tag">ESTIMATE<i></i><i></i><i></i></span>
           <h3>Web見積もり</h3>
           <p>DXFファイルをアップロードするだけで、自動で加工費の概算見積もりが可能。すぐに費用感を確認できます。</p>
         </div>
@@ -133,10 +134,7 @@
           </div>
         </div>
         <div class="spec-image">
-          <!-- 加工写真（3D加工）を配置：images/machining-3d.jpg に差し替え -->
-          <div class="spec-image-placeholder">
-            <p>3D CNC加工の写真をここに配置<br><small>images/machining-3d.jpg</small></p>
-          </div>
+          <img src="images/machining-3d.jpg" alt="ShopBot CNCルーターによる3D加工の様子" loading="lazy">
         </div>
       </div>
     </div>
@@ -188,7 +186,7 @@
              data-popup-desc="着色済みMDF。塗装不要でそのまま使える。全9色からお選びいただけます。"
              data-popup-images="images/colormdf_swatch.png|カラーMDF 全9色"
              data-popup-colors="レッド|#e0564f,オレンジ|#e28a3d,ブラウン|#a9713f,イエロー|#e6b93a,グリーン|#6bb08c,ブルー|#3b7ea8,ライトグレー|#d0cdc5,グレー|#7f838c,ブラック|#3a3a3e">
-          <img src="images/colormdf_swatch.png" alt="カラーMDF" loading="lazy">
+          <img src="images/カラーMDF.jpg" alt="カラーMDF" loading="lazy">
           <div class="material-info">
             <h4>カラーMDF <span class="material-more">＋全色を見る</span></h4>
             <p>着色済みMDF。塗装不要でそのまま使える</p>
@@ -241,8 +239,8 @@
       <p class="section-subtitle">パーツが板から離れない「つなぎ止め」加工</p>
       <div class="tabcut-content">
         <div class="tabcut-image">
-          <!-- 加工写真（2D・タブカット）を差し替えてください -->
-          <div class="tabcut-placeholder">タブカット加工写真</div>
+          <img src="images/tabcut.jpg" alt="タブカット加工（パーツを板につなぎ止める加工）" loading="lazy">
+          <img src="images/tabcut2.jpg" alt="タブカット加工の切り込み拡大" loading="lazy">
         </div>
         <div class="tabcut-text">
           <h3>プラモデルのように、つながったまま納品</h3>
@@ -270,7 +268,7 @@
       <div class="pricing-table">
         <div class="pricing-row">
           <div class="pricing-label">基本加工費</div>
-          <div class="pricing-value">12,000円〜 / 時間</div>
+          <div class="pricing-value">12,000円〜 / 時間<span class="pricing-sub">＋タブカット・仕上げ・面取り など</span></div>
         </div>
         <div class="pricing-row">
           <div class="pricing-label">データ作成費</div>
@@ -293,6 +291,52 @@
     </div>
   </section>
 
+  <!-- Flow / How it works -->
+  <section class="section flow" id="flow">
+    <div class="container">
+      <span class="section-eyebrow">HOW IT WORKS</span>
+      <h2 class="section-title">ご利用の流れ</h2>
+      <p class="section-subtitle">お問い合わせから納品まで、最短当日〜翌日で対応します</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>お問い合わせ・図面送付</h3>
+            <p>DXF / AI / PDF / JPG など。スケッチ・手書きの図面でも対応します。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Web見積もり or お見積り回答</h3>
+            <p>Webツールで即時概算も可能。通常24時間以内にご回答します。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>ご確認・前払いお支払い</h3>
+            <p>お見積り確認後にお支払いをお願いします。入金確認後に加工を開始します。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-body">
+            <h3>加工・仕上げ</h3>
+            <p>最短当日〜翌日で加工完了。完了時にご連絡します。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-body">
+            <h3>引き取り・納品</h3>
+            <p>横浜・川崎エリアは引き取りOK。遠方は発送対応します（送料別途）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Area -->
   <section class="section" id="area">
     <div class="container">
@@ -302,9 +346,8 @@
         <div class="area-text">
           <h3>横浜市港北区の工房</h3>
           <p>
-            横浜市港北区に工房を構えています。<br>
-            横浜・川崎エリアのお客様は、加工品を工房まで直接引き取りに来ていただけます。
-            梱包・発送の費用が不要で、コストを抑えられます。
+            横浜市港北区、第三京浜道路の都筑ICより車で7分ほどのところに工房があります。<br>
+            直接引き取り可能です。梱包費や送料なしで安価にご利用可能です。
           </p>
           <p>遠方のお客様には発送も対応いたします（送料別途）。</p>
           <div class="area-badge">

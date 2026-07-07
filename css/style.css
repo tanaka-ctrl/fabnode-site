@@ -256,52 +256,90 @@ ul {
   flex-wrap: wrap;
 }
 
-/* --- Features / Service --- */
+/* --- Features / Service（営業資料トーン：濃紺×シアン） --- */
 .features {
-  background: #f8f9fa;
+  background: #0D1B2A;
+  background-image:
+    linear-gradient(rgba(0, 180, 216, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 180, 216, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* セクション見出しの英字ラベル */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #00B4D8;
+  border-bottom: 2px solid #00B4D8;
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+}
+
+/* features 内は濃紺背景に合わせて見出しを白系に */
+.features .section-title {
+  color: #fff;
+}
+
+.features .section-subtitle {
+  color: #8ca0b5;
 }
 
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 20px;
 }
 
 .feature-card {
-  background: #fff;
-  padding: 36px 28px;
-  border-radius: 10px;
-  border: 1px solid #e8edf2;
-  transition: transform 0.3s, box-shadow 0.3s;
+  background: #16273c;
+  padding: 28px 26px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 180, 216, 0.12);
+  border-left: 3px solid #00B4D8;
+  transition: transform 0.25s, border-color 0.25s;
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+  border-color: rgba(0, 180, 216, 0.5);
+  border-left-color: #00B4D8;
 }
 
-.feature-icon {
-  width: 52px;
-  height: 52px;
-  background: rgba(0, 180, 216, 0.1);
-  border-radius: 12px;
+/* 英字タグ＋シアンの四角マーク */
+.feature-tag {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #00B4D8;
+  margin-bottom: 16px;
+}
+
+.feature-tag i {
+  width: 7px;
+  height: 7px;
+  background: #00B4D8;
+  display: inline-block;
+}
+
+.feature-tag i:first-of-type {
+  margin-left: 6px;
 }
 
 .feature-card h3 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #0D1B2A;
+  color: #fff;
   margin-bottom: 10px;
 }
 
 .feature-card p {
-  font-size: 0.92rem;
-  color: #555;
+  font-size: 0.9rem;
+  color: #a8b5c5;
   line-height: 1.7;
 }
 
@@ -403,11 +441,67 @@ ul {
   font-size: 0.95rem;
 }
 
+.pricing-sub {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0096b0;
+}
+
 .pricing-note {
   text-align: center;
   margin-top: 24px;
   font-size: 0.88rem;
   color: #888;
+}
+
+/* --- Flow / How it works --- */
+.flow {
+  background: #f8f9fa;
+}
+
+.flow-steps {
+  max-width: 720px;
+  margin: 32px auto 0;
+}
+
+.flow-step {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e8edf2;
+}
+
+.flow-step:last-child {
+  border-bottom: none;
+}
+
+.flow-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #00B4D8;
+  color: #0D1B2A;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-body h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0D1B2A;
+  margin-bottom: 4px;
+}
+
+.flow-body p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.7;
 }
 
 /* --- Materials --- */
@@ -632,6 +726,18 @@ ul {
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
+}
+
+.tabcut-image {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tabcut-image img {
+  height: 240px;
+  object-fit: cover;
+  display: block;
 }
 
 .tabcut-placeholder {
