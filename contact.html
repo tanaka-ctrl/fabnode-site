@@ -158,7 +158,7 @@
   <div class="form-container">
 
     <!-- Form -->
-    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+    <form id="contactForm" action="https://formspree.io/f/maqgkloa" method="POST" enctype="multipart/form-data">
       <div class="form-body">
 
         <!-- お問い合わせの種類 -->
@@ -431,9 +431,22 @@
         form.reset();
         selectedFiles = [];
         renderFileList();
-        document.querySelectorAll('.form-tab')[0].click();
+        // 種類プルダウンを初期状態に戻す（表示切替もリセット）
+        const inquirySelect = document.getElementById('inquiryType');
+        if (inquirySelect) {
+          inquirySelect.selectedIndex = 0;
+          onInquiryTypeChange(inquirySelect.value);
+        }
       } else {
-        throw new Error('送信に失敗しました');
+        // Formspreeのエラー内容を取得して表示
+        let msg = '送信に失敗しました';
+        try {
+          const data = await res.json();
+          if (data && data.errors && data.errors.length) {
+            msg = data.errors.map(e => e.message).join(' / ');
+          }
+        } catch (_) {}
+        throw new Error(msg);
       }
     } catch (err) {
       showToast('送信に失敗しました。メールでお問い合わせください。', 'error');
