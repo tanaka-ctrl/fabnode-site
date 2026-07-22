@@ -158,10 +158,14 @@
 <!-- Nav -->
 <nav>
   <a class="nav-logo" href="index.html">FAB<span>NODE</span></a>
-  <a class="nav-back" href="index.html">
-    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    トップに戻る
-  </a>
+  <div style="display:flex;align-items:center;gap:20px">
+    <a class="nav-back" href="works.html">加工事例</a>
+    <a class="nav-back" href="faq.html">FAQ</a>
+    <a class="nav-back" href="index.html">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      トップに戻る
+    </a>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -183,7 +187,7 @@
     <div id="contactMail">
       <div class="form-body">
 
-        <p class="contact-lead">下記の項目をメールでお送りください。<strong>図面（DXF / PDF / 画像）はメールに添付</strong>してお送りいただけます。通常24時間以内にご返信します。</p>
+        <p class="contact-lead">下記の項目をメールでお送りください。<strong>図面（DXF / PDF / 画像）はメールに添付</strong>してお送りいただけます。通常24時間以内にご返信します。<br><strong>※お電話番号（ご連絡先）は必須</strong>です。折り返しのご連絡・確認に使用します。</p>
 
         <div class="contact-steps">
           <div class="contact-step"><span class="n">1</span><span>「メールで問い合わせる」ボタンを押すと、宛先・件名・記入項目が入ったメールが開きます</span></div>
@@ -195,17 +199,19 @@
         <label class="field-label">記入項目（コピーして使う場合）</label>
         <div class="field-template" id="fieldTemplate">【FABNODE加工お問い合わせ】
 
-■ 会社名／屋号：
 ■ お名前：
-■ ご連絡先（電話）：
-■ 住所：（配送が必要な方のみ）
+■ 会社名／屋号：
+■ メールアドレス：
+■ ご連絡先（電話）※必須：
+■ 図面の有無（あり / なし）：
 ■ 加工の種類（2Dカット / 3D加工 / 文字・サイン / 建築・造作 / その他）：
-■ 素材のご希望：
+■ 素材のご希望（分からなければ「おまかせ」）：
 ■ 数量：
 ■ 希望納期：
 ■ お問い合わせ内容：
+■ FABNODEからのお得情報メール配信：希望する / 希望しない
 
-※図面データ（DXF / PDF / 画像）がある場合は、このメールに添付してお送りください。</div>
+※図面（DXF / PDF / 画像）があれば、このメールに添付してお送りください。</div>
         <div class="copy-row">
           <button type="button" class="copy-btn" id="copyTemplate">記入項目をコピー</button>
         </div>
@@ -243,6 +249,12 @@
 
 <!-- Footer -->
 <footer>
+  <p style="margin-bottom:8px">
+    <a href="index.html">トップ</a> &nbsp;|&nbsp;
+    <a href="works.html">加工事例</a> &nbsp;|&nbsp;
+    <a href="faq.html">FAQ</a> &nbsp;|&nbsp;
+    <a href="estimate.html">Web見積もり</a>
+  </p>
   <p>© FABNODE &nbsp;|&nbsp; <a href="mailto:info@fabnode.jp">info@fabnode.jp</a> &nbsp;|&nbsp; Yokohama, Japan</p>
 </footer>
 
