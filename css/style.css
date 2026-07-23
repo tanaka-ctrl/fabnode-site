@@ -1330,7 +1330,7 @@ ul {
   border-radius: 8px;
   overflow: hidden;
   background: #e8edf2;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1339,6 +1339,14 @@ ul {
   text-align: center;
   padding: 12px;
   box-shadow: 0 2px 12px rgba(13, 27, 42, 0.10);
+}
+/* 画像を入れる場合は枠いっぱいに（padding無し・比率は16:10で揃える） */
+.work-frame.has-image { padding: 0; }
+.work-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .work-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .work-body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
