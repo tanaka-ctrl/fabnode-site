@@ -143,6 +143,9 @@
   .address-box{margin-top:26px;padding:18px;background:var(--ow);border-radius:6px;text-align:center}
   .addr-label{font-size:12px;color:var(--lgray);margin-bottom:8px;line-height:1.6}
   .address-box .addr{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:12px;letter-spacing:.02em}
+  .subject-note{background:rgba(0,194,224,0.08);border-left:3px solid var(--cyan);border-radius:4px;padding:10px 13px;font-size:12px;line-height:1.75;color:var(--dgray);margin:8px 0 16px}
+  .subject-note strong{color:var(--navy);font-weight:700}
+  .addr-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 </style>
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MPX3DD8X1"></script>
@@ -174,7 +177,7 @@
   <div class="page-hero-content">
     <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Contact</div></div>
     <h1 class="page-title">お問い合わせ・<em>見積もり依頼</em></h1>
-    <p class="page-sub">図面（DXF/PDF/画像）をお持ちの場合はそのまま添付できます。通常24時間以内にご回答します。</p>
+    <p class="page-sub">図面（DXF/PDF/画像）をお持ちの場合はそのまま添付できます。通常2営業日以内にご返信します。</p>
   </div>
 </section>
 
@@ -186,7 +189,7 @@
     <div id="contactMail">
       <div class="form-body">
 
-        <p class="contact-lead">下記の項目をメールでお送りください。<strong>図面（DXF / PDF / 画像）はメールに添付</strong>してお送りいただけます。通常24時間以内にご返信します。<br><strong>※お電話番号（ご連絡先）は必須</strong>です。折り返しのご連絡・確認に使用します。</p>
+        <p class="contact-lead">下記の項目をメールでお送りください。<strong>図面（DXF / PDF / 画像）はメールに添付</strong>してお送りいただけます。通常2営業日以内にご返信します。<br><strong>※お電話番号（ご連絡先）は必須</strong>です。折り返しのご連絡・確認に使用します。</p>
 
         <div class="contact-steps">
           <div class="contact-step"><span class="n">1</span><span>「メールで問い合わせる」ボタンを押すと、宛先・件名・記入項目が入ったメールが開きます</span></div>
@@ -196,13 +199,18 @@
         <button type="button" class="mail-btn" id="mailBtn">✉ メールで問い合わせる</button>
 
         <label class="field-label">記入項目（コピーして使う場合）</label>
+        <div class="subject-note">※ご自身でメールを作成する場合は、件名を<strong>【FABNODE加工お問い合わせ】</strong>にしてください。件名が異なると確認が遅れる場合があります。</div>
         <div class="field-template" id="fieldTemplate">【FABNODE加工お問い合わせ】
 
 ■ お名前：
 ■ 会社名／屋号：
 ■ メールアドレス：
 ■ ご連絡先（電話）※必須：
-■ 図面の有無（あり / なし）：
+■ 加工データ（DXF）：あり / なし
+　※切り抜く形状の「線だけ」のデータ。寸法や文字は入れなくてOKです
+■ 指示図（PDF・手描きの写真も可）：あり / なし
+　※寸法・板厚・数量・仕上げなど、加工の指示を書き込んだ図
+■ お受け取り方法：工房で引き取り（横浜市港北区） / 配送
 ■ 加工の種類（2Dカット / 3D加工 / 文字・サイン / 建築・造作 / その他）：
 ■ 素材のご希望（分からなければ「おまかせ」）：
 ■ 数量：
@@ -217,8 +225,12 @@
 
         <div class="address-box">
           <div class="addr-label">ボタンでメールが開かない場合は、こちらのアドレス宛にお送りください</div>
+          <div class="subject-note">※ご自身でメールを作成する場合は、件名を<strong>【FABNODE加工お問い合わせ】</strong>にしてください。件名が異なると確認が遅れる場合があります。</div>
           <div class="addr" id="mailAddr">info@fabnode.jp</div>
-          <button type="button" class="copy-btn" id="copyAddr">アドレスをコピー</button>
+          <div class="addr-btns">
+            <button type="button" class="copy-btn" id="copyAddr">アドレスをコピー</button>
+            <button type="button" class="copy-btn" id="copySubject">件名をコピー</button>
+          </div>
         </div>
 
       </div>
@@ -235,7 +247,7 @@
         </div>
         <div class="info-bar-item">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          通常24時間以内にご回答
+          通常2営業日以内にご返信
         </div>
         <div class="info-bar-item">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
@@ -287,6 +299,7 @@
   }
   document.getElementById('copyTemplate').addEventListener('click', function (e) { copyText(TEMPLATE, e.currentTarget); });
   document.getElementById('copyAddr').addEventListener('click', function (e) { copyText(MAIL, e.currentTarget); });
+  document.getElementById('copySubject').addEventListener('click', function (e) { copyText(SUBJECT, e.currentTarget); });
 </script>
 </body>
 </html>
