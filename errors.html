@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>エラー・注意の一覧（Web見積もり）｜FABNODE</title>
+  <meta name="description" content="FABNODE の Web見積もりで表示されるエラー・注意・案内の番号と意味、直し方の一覧。">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MPX3DD8X1"></script>
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-3MPX3DD8X1');</script>
+  <style>
+    .er-wrap{max-width:980px;margin:0 auto;padding:110px 24px 80px}
+    .er-wrap h1{font-size:1.6rem;color:#0D1B2A;margin-bottom:6px}
+    .er-lead{color:#555;margin-bottom:24px}
+    .er-group{margin:26px 0}
+    .er-group h2{font-size:1.05rem;margin-bottom:4px}
+    .er-group p{font-size:.9rem;color:#555;margin-bottom:10px}
+    table.er{width:100%;border-collapse:collapse;font-size:.9rem;background:#fff;border:1px solid #e3e8ee;border-radius:10px;overflow:hidden}
+    table.er th,table.er td{padding:9px 10px;border-bottom:1px solid #e3e8ee;text-align:left;vertical-align:top}
+    table.er th{background:#f1f5f9;font-size:.82rem}
+    table.er td.code{font-family:monospace;font-weight:700;white-space:nowrap}
+    table.er td.fix{color:#374151}
+    .er-links a{margin-right:16px;color:#00B4D8;text-decoration:underline}
+  </style>
+</head>
+<body>
+  <header class="header"><div class="container">
+    <a href="/" class="logo">FAB<span>NODE</span></a>
+    <nav><ul class="nav-links" id="navLinks">
+      <li><a href="index.html#service">サービス</a></li><li><a href="index.html#pricing">料金</a></li><li><a href="index.html#materials">素材</a></li>
+      <li><a href="faq.html">FAQ</a></li><li><a href="contact.html" class="nav-cta">お問い合わせ</a></li>
+    </ul></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></header>
+<div class="er-wrap"><h1>エラー・注意の一覧</h1><p class="er-lead">Web見積もりに出る番号（E/R/W/I）の意味と直し方。番号を押すと図面の該当箇所が光ります。</p><p class="er-links"><a href="howto-dxf.html">DXF の作り方</a><a href="howto-pdf.html">PDF の描き方</a><a href="estimate.html">Web見積もりへ</a></p><div class="er-group"><h2 style="color:#d93025">エラー（E）</h2><p>送信できません。直してから入れ直してください</p><table class="er"><tr><th>番号</th><th>内容</th><th>表示される文</th><th>直し方</th></tr><tr><td class="code">E01</td><td>レイヤー名が規定外</td><td>レイヤー「レイヤー名」は加工に使えない名前です。out / in / center / pocket / drill / bis / base_36_18mm のいずれかにするか、加工しない線は「memo」レイヤーに移してください</td><td class="fix">レイヤー名を規定の名前に直す</td></tr><tr><td class="code">E01a</td><td>深さの書き方</td><td>レイヤー「レイヤー名」の書き方が違います。貫通なら「out」、途中で止めるなら「out_12」のように数字を入れてください</td><td class="fix">数字なし＝貫通、数字＝深さ</td></tr><tr><td class="code">E01b</td><td>pocket の深さ</td><td>レイヤー「レイヤー名」に深さがありません。「pocket_5」のように数字を入れてください</td><td class="fix">pocket は深さの数字が必須</td></tr><tr><td class="code">E01c</td><td>base の書き方</td><td>レイヤー「レイヤー名」の書き方が違います。「base_36_18mm」「base_48_15mm」のように板サイズと板厚を入れてください</td><td class="fix">base_36_18mm の形にする</td></tr><tr><td class="code">E02</td><td>旧 screw レイヤー</td><td>レイヤー「レイヤー名」は使えません。材の固定用なら「bis」、穴あけなら「drill」（貫通）/「drill_5」にしてください</td><td class="fix">screw → bis または drill</td></tr><tr><td class="code">E03</td><td>板（base）がない</td><td>板（base レイヤー）がありません。テンプレートの base_36_18mm などの枠の中に部品を描いてください</td><td class="fix">テンプレートの枠を使う</td></tr><tr><td class="code">E04</td><td>pocket が板厚以上</td><td>No.◯ の板: 「レイヤー名」は板厚 板厚mm と同じか深いです。貫通させるなら「in」を使ってください</td><td class="fix">貫通は in、掘り込みは板厚より浅く</td></tr><tr><td class="code">E05</td><td>深さが板厚より深い</td><td>No.◯ の板: 「レイヤー名」の深さ 深さmm が板厚 板厚mm より深いです。貫通なら数字なしの「out」にしてください</td><td class="fix">数字を消して貫通にする</td></tr><tr><td class="code">E06</td><td>閉じていない線</td><td>No.◯ の板・「レイヤー名」レイヤーに閉じていない線があります（◯か所）。端点をつなげてください</td><td class="fix">線の始点と終点をつなぐ</td></tr><tr><td class="code">E07</td><td>板からはみ出し</td><td>No.◯ の板: 部品が板の外にはみ出しています（レイヤー名）</td><td class="fix">部品を板の枠の中に移動</td></tr><tr><td class="code">E08</td><td>細すぎる部分</td><td>No.◯ の板: 部品に幅 ◯mm 未満の細い所があります。折れるため加工できません</td><td class="fix">幅を ◯mm 以上にする</td></tr><tr><td class="code">E09</td><td>どの板にも入っていない</td><td>どの板（base）にも入っていない部品があります（レイヤー名）。板の枠の中に移動してください</td><td class="fix">部品を枠の中へ</td></tr><tr><td class="code">E10</td><td>板のふちに近すぎる</td><td>No.◯ の板の右上で、部品と板のふちが ◯mm しかありません（◯mm 以上必要）</td><td class="fix">部品をふちから離す</td></tr><tr><td class="code">E11</td><td>部品どうしが近すぎる</td><td>No.◯ の板の右上で、部品と部品の間が ◯mm しかありません（◯mm 以上必要）</td><td class="fix">部品の間隔を広げる</td></tr><tr><td class="code">E12</td><td>掘り込みが部品に乗っていない</td><td>No.◯ の板: どの部品にも重ならない掘り込みがあります</td><td class="fix">掘り込みは部品の上に描く</td></tr></table></div><div class="er-group"><h2 style="color:#c2410c">要確認（R）</h2><p>自動見積の対象外ですが送信できます。FABNODE が確認してお見積もりします</p><table class="er"><tr><th>番号</th><th>内容</th><th>表示される文</th><th>直し方</th></tr><tr><td class="code">R01</td><td>板厚がない</td><td>No.◯ の板（レイヤー名）に板厚がありません。base_36_18mm のように板厚を書くと自動見積ができます</td><td class="fix">base に板厚を書く</td></tr><tr><td class="code">R02</td><td>定尺以外の板</td><td>No.◯ の板は定尺以外のサイズ（◯×◯）です。材料を確認してからお見積もりします</td><td class="fix">36版/48版なら自動見積</td></tr><tr><td class="code">R03</td><td>板が長すぎる</td><td>No.◯ の板の横幅 ◯mm は加工機の上限 2440mm を超えています。分割が必要なため、確認してからお見積もりします</td><td class="fix">2440mm 以下に分割</td></tr><tr><td class="code">R04</td><td>材料表にない板厚</td><td>No.◯ の板の板厚 板厚mm は材料表にありません。材料を確認してからお見積もりします</td><td class="fix">材料表の板厚を選ぶ</td></tr><tr><td class="code">R05</td><td>板のふちの余白が少ない</td><td>No.◯ の板の右上で、部品と板のふちが ◯mm です（規定 ◯mm）。自動見積もりの対象外です。FABNODEで配置を調整して対応できる場合があります</td><td class="fix">ふちから ◯mm 離すと自動見積</td></tr><tr><td class="code">R06</td><td>部品の間隔が少ない</td><td>No.◯ の板の右上で、部品と部品の間が ◯mm です（規定 ◯mm）。自動見積もりの対象外です。FABNODEで配置を調整して対応できる場合があります</td><td class="fix">間隔を ◯mm にすると自動見積</td></tr><tr><td class="code">R07</td><td>規定外のデータ（B 判定）</td><td>規定のレイヤー（base / out / in …）が見つからなかったため、線の形から部品を読み取って概算を出しました。正式な自動見積にするには、データ作成ガイドの形式で入れ直してください</td><td class="fix">ガイドの形式にするか、直しを FABNODE に任せて送信</td></tr></table></div><div class="er-group"><h2 style="color:#b26a00">注意（W）</h2><p>そのまま送信できます。仕上がりに関わるのでご確認ください</p><table class="er"><tr><th>番号</th><th>内容</th><th>表示される文</th><th>直し方</th></tr><tr><td class="code">W01</td><td>削り残りが薄い</td><td>No.◯ の板: 「レイヤー名」（板厚 板厚mm）は残りが ◯mm です。割れやすいのでご確認ください</td><td class="fix">深さを浅くするか貫通にする</td></tr><tr><td class="code">W02</td><td>曲線（スプライン）</td><td>曲線（スプライン）が含まれています。加工ではごく小さな直線のつなぎになるため、カクカクに見える場合があります</td><td class="fix">気になる場合は円弧で描く</td></tr><tr><td class="code">W03</td><td>細い部分</td><td>No.◯ の板: 部品に幅 ◯mm 未満の細い所があります。欠けやすいのでご確認ください</td><td class="fix">幅を広げるか、そのまま</td></tr><tr><td class="code">W04</td><td>内角に刃物の丸みが残る</td><td>No.◯ の板・部品◯: 内側の角 ◯ か所に刃物の丸み（R3）が残ります。直角にはめ込む場合は逃がし（ドッグボーン）を入れてください</td><td class="fix">フィレット切替で逃がしを入れる</td></tr><tr><td class="code">W05</td><td>掘り込みの肉残り</td><td>No.◯ の板: 外形に接する掘り込みのはみ出しが刃物の半径（3mm）未満のため、外形の内側に肉が残ります。外形から 3mm 以上はみ出させてください</td><td class="fix">掘り込みの線を外形から R 以上はみ出させる</td></tr><tr><td class="code">W06</td><td>縦横の比が合わない</td><td>図の縦横の比が、入力された全体寸法 X×Y と ◯% ずれています。寸法を確認してください</td><td class="fix">X・Y の入力を確認</td></tr><tr><td class="code">W07</td><td>掘り込みが複数の部品にまたがる</td><td>No.◯ の板: 掘り込みが複数の部品にまたがっています。部品◯ の掘り込みとして扱いました</td><td class="fix">部品ごとに分ける</td></tr></table></div><div class="er-group"><h2 style="color:#0369a1">ご案内（I）</h2><p></p><table class="er"><tr><th>番号</th><th>内容</th><th>表示される文</th><th>直し方</th></tr><tr><td class="code">I01</td><td>刃物が入らない穴</td><td>No.◯ の板: 刃物（φ深さmm）が入らない小さい穴が ◯ か所あります（穴は 7mm 以上にしてください）。この穴は別途お見積もりになります</td><td class="fix">穴を ◯mm 以上に</td></tr><tr><td class="code">I02</td><td>彫刻は別途見積</td><td>No.◯ の板: 彫刻（レイヤー名）は別途お見積もりになります</td><td class="fix"></td></tr><tr><td class="code">I03</td><td>完成図面は対象外</td><td>これはパーツ加工の自動見積もりです。組み立て後の完成図面（三面図・組立図）からは見積もれません。部品ごとの平面図にしてください</td><td class="fix">部品ごとの平面図にする</td></tr></table></div></div>
+  <footer class="footer"><div class="container">
+    <div class="footer-content">
+      <div><div class="footer-brand">FAB<span>NODE</span></div><p class="footer-desc">ShopBot CNCルーターによる木材加工の受託サービス。横浜・川崎エリアを中心に対応。</p></div>
+      <div class="footer-links"><h4>メニュー</h4><a href="index.html#service">サービス</a><a href="index.html#pricing">料金</a><a href="index.html#materials">素材</a></div>
+      <div class="footer-links"><h4>リンク</h4><a href="faq.html">FAQ</a><a href="contact.html">お問い合わせ</a><a href="estimate.html">Web見積もり</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FABNODE. All rights reserved.</div>
+  </div></footer>
+  <script>
+    (function(){var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');t.addEventListener('click',function(){l.classList.toggle('active')});})();
+  </script>
+</body>
+</html>

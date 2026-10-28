@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF・規定外DXF の描き方（Web概算見積もり）｜FABNODE</title>
+<meta name="description" content="FABNODE の Web概算見積もりに入れる PDF・規定外 DXF の描き方。線＝外形と抜き、塗り＝掘り込み、小さい円＝穴あけ、全体寸法の入れ方。">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
+<style>
+  :root{--navy:#16233f;--navy2:#22345c;--cyan:#0096b0;--cyan-l:#e2f4f7;--ink:#1c2430;--mut:#5b6774;--line:#e2e6ec;--bg:#f6f8fa;--card:#fff;--red:#d0342c;--blue:#1e6fba;--green:#1d8348;--orange:#d68410}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 90px}
+  header{background:var(--navy);color:#fff;padding:44px 0 40px;margin-bottom:32px}
+  header .wrap{padding-bottom:0}
+  .brand{font-size:13px;letter-spacing:.18em;color:var(--cyan);font-weight:700}
+  h1{font-size:27px;margin:8px 0 6px;font-weight:800}
+  header p{margin:0;color:#c7d2e2;font-size:14px}
+  h2{font-size:20px;margin:46px 0 6px;padding-top:22px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--cyan);color:#fff;border-radius:8px;font-size:14px;font-weight:800;flex:0 0 auto}
+  .lead{color:var(--mut);margin:6px 0 16px}
+  .fig{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0;text-align:center}
+  .fig img{max-width:100%;height:auto;border-radius:8px}
+  .cap{color:var(--mut);font-size:13px;margin-top:10px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--cyan-l);color:var(--navy);font-weight:700;font-size:13px}
+  code{background:#eef1f5;padding:2px 7px;border-radius:6px;font-family:"SF Mono",Menlo,monospace;font-size:13px;color:var(--navy2)}
+  .note{background:var(--cyan-l);border-left:4px solid var(--cyan);border-radius:0 10px 10px 0;padding:12px 16px;margin:16px 0;font-size:14px;color:var(--navy)}
+  .warn{background:#fdf2e6;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;padding:12px 16px;margin:16px 0;font-size:14px;color:#8a5a09}
+  ul{padding-left:22px}li{margin:5px 0}
+  .dl{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;font-size:15px}
+  .foot{color:var(--mut);font-size:12px;text-align:center;margin-top:48px}
+  .sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid rgba(0,0,0,.2)}
+  a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">FABNODE / CNC加工受託</div>
+  <h1>PDF・規定外DXF の描き方（Web概算見積もり）</h1>
+  <p>テンプレートを使わない図面でも、線と塗りの「約束ごと」を守れば、その場で概算が出ます。</p>
+</div></header>
+
+<div class="wrap">
+
+<div class="note"><b>これは「概算」です。</b> PDF や規定外の DXF からは、FABNODE が部品を読み取って自動で板に並べ、概算を出します。正式な自動見積もり（その場で確定額）にしたい場合は <a href="howto-dxf.html">テンプレート形式の DXF</a> で入れてください。<br>
+<b>対象はパーツ加工（板からの切り出し）です。</b> 組み立て後の完成図面・三面図からは見積もれません。<b>部品ごとの平面図</b>にしてください。</div>
+
+<h2><span class="n">1</span>線と塗りの約束ごと</h2>
+<p class="lead">読み取りは「閉じた線の入れ子」と「塗り」で判断します。色は問いません。</p>
+<table>
+  <tr><th>描くもの</th><th>読み取り</th><th>補足</th></tr>
+  <tr><td><b>いちばん外の閉じた線</b></td><td>部品の外形（切り抜き・貫通）</td><td>線の内側が部品として残ります</td></tr>
+  <tr><td><b>外形の中の閉じた線</b></td><td>穴・窓（貫通で抜く）</td><td>さらにその中の線は「別の部品」（入れ子で交互に判定）</td></tr>
+  <tr><td><b>塗りつぶし・ハッチングのある閉じた線</b></td><td>掘り込み（ポケット）・溝</td><td>深さは見積もりページで入力（番号つきで聞きます）</td></tr>
+  <tr><td><b>小さい円（直径 30mm 以下）</b></td><td>穴あけ（ドリル）</td><td>直径をそのまま使います。刃物径より小さい穴は別途お見積もり</td></tr>
+  <tr><td><b>点線の大きな四角</b></td><td>板の枠（あれば縮尺の基準）</td><td>無くても構いません</td></tr>
+</table>
+<div class="warn"><b>線は必ず閉じてください</b>（始点と終点がつながっている）。開いた線は外形として読めずエラーになります。線の重なり・二重線も避けてください。</div>
+
+<div class="fig">
+  <img src="images/pdf_preview_sample.png" alt="サンプルPDFの読み取り結果：P1〜P5 の部品、掘り込み（青）、刃物の丸みが残る内角（赤丸）、肉残り（オレンジ）">
+  <div class="cap">サンプル PDF を読み取った結果。P1〜P5 が部品、青が掘り込み、赤丸は刃物の丸み（R3）が残る内角、オレンジは外形に接する掘り込みの肉残り</div>
+</div>
+
+<h2><span class="n">2</span>全体寸法 X, Y（PDF のとき）</h2>
+<ul>
+  <li>PDF には実寸の情報が無いので、<b>図全体の横幅 X と高さ Y（mm）</b>を見積もりページで入力します。点線の板の枠があればその枠、無ければ部品全体の外接の大きさです。</li>
+  <li>X と Y の比が図と 5% 以上ずれていると注意が出ます（どちらかの入力ミスの可能性）。</li>
+  <li>DXF は mm のまま読みます（入力不要）。</li>
+</ul>
+
+<h2><span class="n">3</span>線ごとの種類を直す（簡易CAM）</h2>
+<p class="lead">自動の判定が違っていたら、見積もりページの「線ごとの種類を直す」で、線ごとに <b>外形／穴・窓／掘り込み（深さ）／穴あけ／使わない</b> を選び直せます。描き直さなくて済みます。</p>
+<ul>
+  <li>「使わない」にすると、その線は加工しません（寸法線・補助線・文字の輪郭が線として読まれたとき用）。</li>
+  <li>掘り込みは深さ（mm）を入れてください。未入力のときは板厚の 1/3 を仮に使います。</li>
+</ul>
+
+<h2><span class="n">4</span>外形に接する掘り込み（肉残り）</h2>
+<p class="lead">刃物は丸いので、掘り込みの線を外形に「ぴったり」描くと、外形の内側に<b>刃物半径（φ6 なら 3mm）ぶんの肉</b>が残ります。</p>
+<ul>
+  <li>外形まで掘り切りたいときは、掘り込みの線を<b>外形から 3mm 以上はみ出させて</b>描いてください。</li>
+  <li>はみ出しが足りないと「肉残り」の注意（W05）が出て、プレビューにオレンジで表示されます。</li>
+</ul>
+
+<h2><span class="n">5</span>板への自動配置</h2>
+<ul>
+  <li>部品は FABNODE が自動で板（36版 1820×910 ／ 48版 2440×1220）に並べます。<b>材料費が安い方の板</b>を選びます。</li>
+  <li><b>歩留まり優先</b>（初期値）: 90° 回転も使って枚数を減らします。<b>木目優先</b>: 部品の長辺を木目（板の長辺）にそろえます（180° 回転のみ）。</li>
+  <li>余白（板のふち 25/30mm・部品の間 35/40mm）は自動で確保します。</li>
+</ul>
+
+<h2><span class="n">6</span>読み取れない PDF</h2>
+<ul>
+  <li>スキャン・写真・画像を貼っただけの PDF は線が取れません → <a href="estimate.html">見積もり相談</a>からお送りください。</li>
+  <li>文字（寸法・注記）は線として読まれることがあります。その線は「使わない」にしてください（アウトライン化しないのが確実です）。</li>
+</ul>
+
+<h2><span class="n">7</span>サンプル PDF</h2>
+<p class="lead">上の図のサンプルです。描き方の見本として、またそのまま入れて動きを試すのにお使いください（全体寸法 X 1820 / Y 910）。</p>
+<p><a class="dl" href="downloads/FABNODE_SamplePDF.pdf" download>▼ サンプルPDFをダウンロード</a></p>
+<p style="margin-top:14px"><a href="estimate.html">▶ Web見積もりで入れてみる</a>　／　<a href="errors.html">エラー・注意の一覧</a>　／　<a href="howto-dxf.html">DXF の作り方（テンプレート形式）</a></p>
+
+<div class="foot">FABNODE データ作成ガイド（PDF・規定外DXF 編）2026-10 ／ 仕様は予告なく更新される場合があります。</div>
+</div>
+</body>
+</html>
