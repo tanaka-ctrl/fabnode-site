@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABNODE データ作成ガイド</title>
+<style>
+  :root{
+    --navy:#16233f; --navy2:#22345c; --cyan:#0096b0; --cyan-l:#e2f4f7;
+    --ink:#1c2430; --mut:#5b6774; --line:#e2e6ec; --bg:#f6f8fa; --card:#fff;
+    --red:#d0342c; --blue:#1e6fba; --green:#1d8348; --orange:#d68410; --pink:#d21f8a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.75;font-size:15px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 90px}
+  header{background:var(--navy);color:#fff;padding:44px 0 40px;margin-bottom:32px}
+  header .wrap{padding-bottom:0}
+  .brand{font-size:13px;letter-spacing:.18em;color:var(--cyan);font-weight:700}
+  h1{font-size:27px;margin:8px 0 6px;font-weight:800}
+  header p{margin:0;color:#c7d2e2;font-size:14px}
+  h2{font-size:20px;margin:46px 0 6px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:10px}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;
+    background:var(--cyan);color:#fff;border-radius:8px;font-size:14px;font-weight:800;flex:0 0 auto}
+  h3{font-size:15px;margin:24px 0 6px;color:var(--navy2)}
+  .lead{color:var(--mut);margin:6px 0 16px}
+  .fig{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin:16px 0;text-align:center}
+  .fig svg{max-width:100%;height:auto}
+  .cap{color:var(--mut);font-size:13px;margin-top:10px}
+  .imgcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0;text-align:center}
+  .imgcard img{max-width:340px;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--cyan-l);color:var(--navy);font-weight:700;font-size:13px}
+  tr:last-child td{border-bottom:none}
+  td .ok{color:var(--green);font-weight:700}
+  td .ng{color:var(--red);font-weight:700}
+  code{background:#eef1f5;padding:2px 7px;border-radius:6px;font-family:"SF Mono",Menlo,monospace;
+    font-size:13px;color:var(--navy2)}
+  .note{background:var(--cyan-l);border-left:4px solid var(--cyan);border-radius:0 10px 10px 0;
+    padding:12px 16px;margin:16px 0;font-size:14px;color:var(--navy)}
+  .warn{background:#fdf2e6;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;
+    padding:12px 16px;margin:16px 0;font-size:14px;color:#8a5a09}
+  ul{padding-left:22px}li{margin:5px 0}
+  .foot{color:var(--mut);font-size:12px;text-align:center;margin-top:48px}
+  .dl{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#fff;
+    text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;font-size:15px}
+  .dim{fill:var(--cyan);font-size:12px;font-weight:700;font-family:monospace}
+  .lbl{fill:#5b6774;font-size:12px}
+  .lp{background:#fbfcfd;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0}
+  .lp-h{background:var(--navy);color:#fff;padding:9px 14px;font-weight:700;font-size:13px}
+  .lp-r{display:flex;align-items:center;gap:9px;padding:7px 14px;border-bottom:1px solid #eef1f4}
+  .lp-r:last-child{border-bottom:none}
+  .lp-g{font-weight:700;color:var(--navy2);background:#f1f5f9}
+  .chip{width:13px;height:13px;border-radius:3px;flex:0 0 auto;border:1px solid rgba(0,0,0,.18)}
+  .ind1{padding-left:34px}.ind2{padding-left:54px}
+  .lp-r .mn{font-family:"SF Mono",Menlo,monospace;font-size:12.5px}
+  .lp-r .ds{color:var(--mut);font-size:12px;margin-left:auto;text-align:right}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">FABNODE / CNC加工受託</div>
+  <h1>データ作成ガイド</h1>
+  <p>入稿用DXFの作り方と、加工上のルール。これに沿って作れば、そのまま加工データ（.sbp）になります。</p>
+</div></header>
+
+<div class="wrap">
+
+<div class="note"><b>まず全体像。</b> FABNODEは<b>DXFのレイヤー名</b>で加工内容を判断します。<code>base</code>で板を定義し、<code>out</code>/<code>in</code>/<code>center</code>/<code>pocket</code>で加工の種類を指定するだけ。ビス・タブ・オフセットは自動なので、<b>仕上がり寸法の線だけ</b>描けばOKです。まずは<b>テンプレートDXF</b>（<a href="downloads/FABNODE_Template.dxf" download>ダウンロード</a>）を開いて構造を確認するのが近道です。できたデータは <a href="estimate.html">Web見積もり</a> に入れると、その場で金額とエラーの場所が分かります。</div>
+
+<h2><span class="n">1</span>加工の種類（out / in / center / pocket）</h2>
+<p class="lead">刃物は太さがあるので、線の<b>どちら側</b>を切るかで仕上がり寸法が変わります。ここがいちばん大事です。</p>
+
+<div class="fig">
+<svg viewBox="0 0 620 555" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0 0 L8 3.5 L0 7 Z" fill="#d0342c"/></marker>
+    <marker id="arB" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0 0 L8 3.5 L0 7 Z" fill="#1e6fba"/></marker>
+    <marker id="arG" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0 0 L8 3.5 L0 7 Z" fill="#1d8348"/></marker>
+    <marker id="arO" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0 0 L8 3.5 L0 7 Z" fill="#d68410"/></marker>
+  </defs>
+
+  <g transform="translate(0,0)">
+    <rect x="6" y="6" width="288" height="176" fill="#edf0f3"/>
+    <text x="16" y="22" fill="#7a8794" font-size="11">材料</text>
+    <rect x="72" y="44" width="150" height="100" fill="#f7e7e5" stroke="#d0342c" stroke-width="2.5"/>
+    <rect x="56" y="28" width="182" height="132" fill="none" stroke="#d0342c" stroke-width="1.4" stroke-dasharray="6 5"/>
+    <path d="M120 28 H154" fill="none" stroke="#d0342c" stroke-width="1.4" marker-end="url(#arR)"/>
+    <circle cx="56" cy="94" r="16" fill="#f4d3cf" stroke="#d0342c" stroke-width="1.6"/>
+    <text x="152" y="99" text-anchor="middle" fill="#9a2b25" font-size="12.5" font-weight="700">部品が残る</text>
+    <text x="260" y="42" text-anchor="middle" fill="#7a8794" font-size="10.5">外は捨て</text>
+    <text x="150" y="212" text-anchor="middle" fill="#d0342c" font-size="15" font-weight="800">out</text>
+    <text x="150" y="232" text-anchor="middle" fill="#5b6774" font-size="12.5">線の外側を切る → 内側が部品</text>
+  </g>
+
+  <g transform="translate(320,0)">
+    <rect x="6" y="6" width="288" height="176" fill="#e7eef8"/>
+    <text x="16" y="22" fill="#4a6785" font-size="11">材料が残る</text>
+    <rect x="72" y="44" width="150" height="100" fill="#ffffff" stroke="#1e6fba" stroke-width="2.5"/>
+    <rect x="88" y="60" width="118" height="68" fill="none" stroke="#1e6fba" stroke-width="1.4" stroke-dasharray="6 5"/>
+    <path d="M122 60 H156" fill="none" stroke="#1e6fba" stroke-width="1.4" marker-end="url(#arB)"/>
+    <circle cx="88" cy="94" r="16" fill="#d3e3f5" stroke="#1e6fba" stroke-width="1.6"/>
+    <text x="152" y="99" text-anchor="middle" fill="#164e85" font-size="12.5" font-weight="700">穴が抜ける</text>
+    <text x="150" y="212" text-anchor="middle" fill="#1e6fba" font-size="15" font-weight="800">in</text>
+    <text x="150" y="232" text-anchor="middle" fill="#5b6774" font-size="12.5">線の内側を切る → 穴が抜ける</text>
+  </g>
+
+  <g transform="translate(0,290)">
+    <rect x="6" y="6" width="288" height="176" fill="#edf0f3"/>
+    <rect x="36" y="48" width="222" height="92" fill="#e5f1ea"/>
+    <text x="150" y="72" text-anchor="middle" fill="#4a7a5f" font-size="11">材料が残る</text>
+    <rect x="36" y="86" width="222" height="16" fill="#ffffff"/>
+    <line x1="36" y1="94" x2="258" y2="94" stroke="#1d8348" stroke-width="2.5"/>
+    <path d="M150 94 H192" fill="none" stroke="#1d8348" stroke-width="1.4" marker-end="url(#arG)"/>
+    <circle cx="80" cy="94" r="15" fill="none" stroke="#1d8348" stroke-width="2"/>
+    <text x="150" y="128" text-anchor="middle" fill="#5b6774" font-size="11">白い帯＝溝（刃物幅で掘る）</text>
+    <text x="150" y="212" text-anchor="middle" fill="#1d8348" font-size="15" font-weight="800">center</text>
+    <text x="150" y="232" text-anchor="middle" fill="#5b6774" font-size="12.5">線の上を切る → 刃物幅の溝</text>
+  </g>
+
+  <g transform="translate(320,290)">
+    <rect x="6" y="6" width="288" height="176" fill="#edf0f3"/>
+    <rect x="72" y="44" width="150" height="100" fill="#fdefdc" stroke="#d68410" stroke-width="2.5"/>
+    <rect x="90" y="60" width="114" height="68" fill="#e39433"/>
+    <text x="147" y="55" text-anchor="middle" fill="#5b3906" font-size="11">部品（残る）</text>
+    <text x="147" y="98" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">掘った所</text>
+    <text x="147" y="115" text-anchor="middle" fill="#fff3e2" font-size="10.5">貫通しない</text>
+    <text x="150" y="212" text-anchor="middle" fill="#d68410" font-size="15" font-weight="800">pocket</text>
+    <text x="150" y="232" text-anchor="middle" fill="#5b6774" font-size="12.5">濃い所を指定深さまで掘る</text>
+  </g>
+</svg>
+<div style="text-align:left;max-width:600px;margin:10px auto 0;font-size:12.5px;color:var(--mut);line-height:1.9">
+  <b style="color:var(--ink)">凡例</b>　<b>実線</b>＝あなたが描くDXFの線 ／ <b>薄い色</b>＝材料が残る ／ <b>白</b>＝抜ける・溝（切り取る所） ／ <b>濃い色</b>＝ポケットで掘った所 ／ <b>点線＋矢印</b>＝ビット中心の軌道（時計回り） ／ <b>丸</b>＝ビット（線に接して回る）
+</div>
+</div>
+
+<table>
+  <tr><th>種類</th><th>刃物の位置</th><th>用途</th></tr>
+  <tr><td><b style="color:var(--red)">out</b></td><td>線の<b>外側</b>を切る</td><td>部品の外形（線の内側が部品として残る）</td></tr>
+  <tr><td><b style="color:var(--blue)">in</b></td><td>線の<b>内側</b>を切る</td><td>穴・窓抜き（線の内側が抜ける）</td></tr>
+  <tr><td><b style="color:var(--green)">center</b></td><td>線の<b>上</b>を切る</td><td>溝・けがき（刃物の幅で掘る）</td></tr>
+</table>
+
+<div class="note"><b>オフセットは描かなくてOK。</b> 刃物の半径ぶんの逃げは FABNODE が自動計算します。あなたは仕上がり寸法の線だけ描いてください（他社のように自分でオフセット線を作る必要はありません）。</div>
+
+<h2><span class="n">2</span>レイヤー命名規則</h2>
+<p class="lead"><b>貫通して切り抜くなら番号なし</b>（<code>out</code>）。<b>途中まで（部分加工）なら番号つき</b>（<code>out_15</code>）で深さ(mm)を付けます。</p>
+
+<h3>貫通カット ＝ 番号なし</h3>
+<table>
+  <tr><th>レイヤー名</th><th>加工内容</th></tr>
+  <tr><td><code>out</code></td><td>外側で貫通（深さは自動で板厚+0.2mm）</td></tr>
+  <tr><td><code>in</code></td><td>内側で貫通（穴・窓抜き）</td></tr>
+  <tr><td><code>center</code></td><td>線の上で貫通</td></tr>
+</table>
+
+<h3>部分加工（途中まで）＝ 番号つき</h3>
+<table>
+  <tr><th>レイヤー名の例</th><th>加工内容</th></tr>
+  <tr><td><code>out_15</code></td><td>外形を深さ15mmまで（貫通させない）</td></tr>
+  <tr><td><code>center_5</code></td><td>中心線を深さ5mmの溝・けがき</td></tr>
+  <tr><td><code>pocket_8</code></td><td>ポケット（面を深さ8mmまで掘る）</td></tr>
+  <tr><td><code>drill</code> / <code>drill_5</code></td><td><b>穴あけ</b>。円を描くと中心に穴、円の直径が穴の大きさ。数字なしは貫通、<code>drill_5</code> は深さ5mm。刃物径（φ6）と同じ〜少し大きい穴はドリルで突き、それより大きい穴は円に沿って切ります</td></tr>
+  <tr><td><code>bis</code></td><td><b>材を固定するビスの位置</b>（加工中に板を固定するためのもの。点または小さい円の中心）。通常は自動配置なので描かなくて構いません</td></tr>
+  <tr><td><code>base_36_18mm</code> / <code>base_48_15mm</code></td><td>板の枠（加工なし）。<code>36</code>＝1820×910、<code>48</code>＝2440×1220、数字は板厚。<code>mm</code> はあってもなくても可</td></tr>
+</table>
+
+<div class="warn"><b>番号つきの深さが板厚より深いとエラーになります。</b> <code>pocket</code> は板厚と同じ深さもエラー（貫通は <code>in</code> で）。残りが 1〜3mm になる深さは「割れやすい」注意が出ます。<b>貫通させたいときは番号を消して <code>out</code> / <code>in</code> / <code>center</code> に入れてください。</b></div>
+
+<div class="warn"><b>旧レイヤー名 <code>screw</code> は使えません。</b> 材の固定用なら <code>bis</code>、穴あけなら <code>drill</code> にしてください（Web見積もりではエラーになります）。点（POINT）は <code>bis</code> / <code>drill</code> レイヤーにあるものだけ読みます。</div>
+
+<div class="note"><b>テンプレートにない板厚のとき</b>は、<code>base_36_18mm</code> の数字を書き換えるだけです（例: 21mm なら <code>base_36_21mm</code>）。<b>Rhino の親子レイヤーはそのままで OK</b>（<code>base$36$base_36_18mm</code> のように書き出されても、最後の名前で判断します）。<code>memo</code> レイヤーと、名前が <code>_cut</code> で終わる親レイヤーは加工しません。文字や寸法線はどのレイヤーにあっても無視します。</div>
+
+<h3>Rhinoのレイヤー構成（テンプレート）</h3>
+<div class="imgcard">
+  <img src="images/guide_layer_panel.png" alt="Rhinoのレイヤーパネル：base（36/48）・outline_cut（out/out_12）・inline_cut（in/in_5）・center_cut・pocket_cut・screw_cut">
+  <div class="cap">この構成のテンプレートで、各グループの子レイヤーに線を割り当てます</div>
+</div>
+
+<h2><span class="n">3</span>base（板と原点）と加工範囲</h2>
+<ul>
+  <li><b>1つのbase＝板1枚。</b> 複数枚に分けたいときはbaseの矩形を複数置くと、板ごとに分割してデータ生成します。</li>
+  <li>各板の<b>左下が原点(0,0)</b>。機械ではその角に原点を合わせます。</li>
+</ul>
+<p class="lead">板を機械に固定する余白があるため、板いっぱいには切れません。<b>板のふち</b>から下の余白を空けて部材を置いてください。</p>
+<table>
+  <tr><th>板厚</th><th>板のふちの余白</th><th>部材と部材の間</th><th>36版の使える範囲</th><th>48版の使える範囲</th></tr>
+  <tr><td>24mm未満</td><td><b>25mm</b></td><td><b>35mm</b></td><td>1770 × 860mm</td><td>2390 × 1170mm</td></tr>
+  <tr><td>24mm以上</td><td><b>30mm</b></td><td><b>40mm</b></td><td>1760 × 850mm</td><td>2380 × 1160mm</td></tr>
+</table>
+<div class="note">余白が足りなくてもエラーにはなりません。「自動見積の対象外」として送信でき、FABNODE が配置を調整できるか確認してお見積もりします。定尺（36版・48版）以外の板は <code>base_600x1820_20mm</code> のように <b>横×縦_板厚</b> で書けます（こちらも確認してからのお見積もりになります）。板の横幅は 2440mm までです。</div>
+<p class="lead">板の番号は <b>左下が No.1</b>、右へ進み、上の段へ。エラーは「No.2 の板」のように番号と場所つきで表示されます。</p>
+
+<h2><span class="n">4</span>対応している加工方法</h2>
+<table>
+  <tr><th>加工</th><th>対応</th><th>内容</th></tr>
+  <tr><td>輪郭（切り抜き）</td><td><span class="ok">○</span></td><td>閉じた線で外側/内側を切る（out / in）</td></tr>
+  <tr><td>溝彫り</td><td><span class="ok">○</span></td><td>線の上を刃物の幅で掘る（center）</td></tr>
+  <tr><td>ポケット（掘り込み）</td><td><span class="ok">○</span></td><td>範囲を指定した深さまで掘る（pocket）</td></tr>
+  <tr><td>穴あけ・ドリル</td><td><span class="ok">○</span></td><td><code>drill</code> レイヤーに円を描く（最小径あり・下記）。固定ビスは自動なので通常は作図不要</td></tr>
+  <tr><td>3D加工 / 両面加工 / 斜め加工</td><td><span class="ng">✕</span></td><td>システム未対応（内容によっては個別対応可。お問い合わせください）</td></tr>
+</table>
+
+<h2><span class="n">5</span>刃物と穴の最小径</h2>
+<p class="lead">刃物の直径は<b>板厚で自動</b>で決まります（指定はできません）。</p>
+<table>
+  <tr><th>刃物径</th><th>対応板厚</th><th>穴の目安</th></tr>
+  <tr><td>φ6mm</td><td>24mm以下</td><td>直径 6mm 以上（8mm 以上が確実）</td></tr>
+  <tr><td>φ12mm</td><td>24mm超</td><td>直径 15mm 以上が確実</td></tr>
+</table>
+<div class="note"><b>穴は「刃物径＋1mm」以上にしてください</b>（φ6 の刃物なら 7mm 以上。<code>in</code> の窓なら短い方の辺が 7mm 以上）。それより小さい穴は刃物が入らないため<b>別途お見積もり</b>になります（自動見積には入りません。送信はできます）。条件を満たす穴は、小さくても最後に1周きれいにさらって仕上げます。<code>drill</code> の円が刃物径ちょうど〜＋1mm のときはドリルで突きます。</div>
+
+<h2><span class="n">6</span>ポケット（掘り込み）</h2>
+<ul>
+  <li>閉じた線の範囲を、指定深さまで掘り下げます（<code>pocket_8</code>＝深さ8mm）。</li>
+  <li><b>ポケットで貫通はできません。</b> 貫通させたい場合は <code>in</code>（内側切り抜き）を使ってください。そのほうが速く仕上がります。</li>
+  <li><b>島（削り残し）を作りたいとき：</b> ポケットの内側に <code>pocket_0</code>（深さ0mm）のレイヤーで形を描くと、その部分だけ<b>削らずに残せます</b>。</li>
+</ul>
+
+<h2><span class="n">7</span>部材間・板端のクリアランス</h2>
+<p class="lead">刃物が通る隙間と、固定用のビスを打つ余白が必要です。板厚で最小距離が変わります（第3章と同じ値）。</p>
+<table>
+  <tr><th>場所</th><th>板厚 24mm未満</th><th>板厚 24mm以上</th></tr>
+  <tr><td>部材どうし</td><td>35mm 以上</td><td>40mm 以上</td></tr>
+  <tr><td>板のふちから部材まで</td><td>25mm 以上</td><td>30mm 以上</td></tr>
+</table>
+<div class="warn"><b>近すぎる配置は「自動見積の対象外」になります。</b> そのまま送信はできますが、FABNODE で配置を調整できるか確認してからのお見積もりになります。急ぎの場合は部材を離して配置し直してください（近すぎる箇所は画面にオレンジで表示されます）。部材に <b>幅 10mm 未満の細い所</b>があるとタブが付けられず折れるためエラー、10〜15mm は注意が出ます。</div>
+
+<h2><span class="n">8</span>フィレット（内角の逃げ）</h2>
+<p class="lead">刃物は丸いので、<b>内側の角は必ずRになります</b>。木組みで直角にはめ込みたいときは、角に「逃げ」を入れると相手部材がぴったり収まります。</p>
+<div class="fig">
+<svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(20,20)">
+    <path d="M20 20 H150 V140 H20 Z" fill="none" stroke="#5f6e80" stroke-width="2"/>
+    <path d="M150 20 A18 18 0 0 1 132 38" fill="none" stroke="#d0342c" stroke-width="3"/>
+    <text x="85" y="165" text-anchor="middle" class="lbl">そのまま＝角にRが残る（はまらない）</text>
+  </g>
+  <g transform="translate(200,20)">
+    <path d="M20 20 H150 V140 H20 Z" fill="none" stroke="#5f6e80" stroke-width="2"/>
+    <circle cx="147" cy="23" r="11" fill="none" stroke="#0096b0" stroke-width="2.5"/>
+    <text x="85" y="165" text-anchor="middle" class="lbl">ドッグボーン</text>
+  </g>
+  <g transform="translate(360,20)">
+    <path d="M20 20 H150 V140 H20 Z" fill="none" stroke="#5f6e80" stroke-width="2"/>
+    <rect x="136" y="14" width="22" height="18" fill="none" stroke="#0096b0" stroke-width="2.5"/>
+    <text x="85" y="165" text-anchor="middle" class="lbl">Tボーン</text>
+  </g>
+</svg>
+<div class="cap">角に少し切り込む「ドッグボーン」「Tボーン」で直角がかみ合う。差し込み方向に沿わせると穴を隠せます</div>
+</div>
+<div class="note">フィレットは手動で作図するほか、Web上でも付けられます（予定）。</div>
+
+<h2><span class="n">9</span>タブ・ビス（どちらも自動）</h2>
+<ul>
+  <li><b>タブ</b>＝部材が加工中に外れて飛ばないよう、板とつなぐ細い残し。<b>自動配置・作図不要</b>。直線部に付き、角や急カーブ・小穴には付きません。加工後にノコ等で切り離してください（跡が残ります）。</li>
+  <li><b>ビス</b>＝板を機械の台に固定する下穴。<b>自動配置・作図不要</b>。部材にならない余白に置かれ、仕上がり面には打ちません。薄板（12mm以下）は浮きやすいためやや多めに。</li>
+</ul>
+
+<h2><span class="n">10</span>加工精度・公差（ご確認ください）</h2>
+<ul>
+  <li>設計データから <b>±1mm程度</b> の加工誤差が出ることがあります。</li>
+  <li>材料の厚みに <b>±0.5mm程度</b> の個体差がある場合があります。</li>
+  <li>合板のポケット加工は、積層により設計より <b>1〜2mm深く</b> なる場合があります。</li>
+  <li>湿気による膨れ・反り、乾燥による収縮・反りが起きることがあります。</li>
+  <li>木材の個体差により、節・割れ・ヒビ・色味の差が出る場合があります。配送中に軽微な傷がつくこともあります。</li>
+</ul>
+<div class="note">精度がシビアな設計は、あらかじめクリアランスを多めに取るか、組立時にヤスリ等で微調整してください。</div>
+
+<h2><span class="n">11</span>入稿前チェックリスト</h2>
+<div class="fig" style="text-align:left;padding:20px 24px">
+<ul>
+  <li>貫通は番号なし <code>out</code>/<code>in</code>/<code>center</code>、部分加工は番号つき（板厚−1mmまで）か</li>
+  <li>2Dパスのみか（3Dパス・面・ソリッドは不可）</li>
+  <li>線は閉じているか／繋がる線は連結されているか</li>
+  <li>ポケット線は外形線に重なるか内側にあるか</li>
+  <li>単位は mm か</li>
+  <li>部材どうし・板端のあきは足りているか（第7章）</li>
+  <li>ビス・タブ・オフセットは作図していないか（すべて自動）</li>
+  <li>部品はすべて base の枠の中にあるか／枠からはみ出していないか</li>
+  <li>穴は刃物径＋1mm（φ6 なら 7mm）以上か（小さい穴は別途お見積もり）</li>
+  <li>旧 <code>screw</code> レイヤーを使っていないか（<code>bis</code> / <code>drill</code> に）</li>
+</ul>
+</div>
+
+<h2><span class="n">12</span>料金の目安</h2>
+<p class="lead">Web見積もりで出る金額は次の式です（税別・税込併記）。</p>
+<table>
+  <tr><th>項目</th><th>計算</th></tr>
+  <tr><td>加工費</td><td>加工時間 × <b>12,000円/時</b>。ただし <b>最低加工費 5,000円</b>（加工費がそれ以下でも 5,000円）</td></tr>
+  <tr><td>材料費</td><td>使う板の枚数 × 材料の価格（Web見積もりで材料を切り替えて比較できます）</td></tr>
+  <tr><td>データ作成費</td><td>板1枚あたり <b>3,000円</b>（DXF 入稿）。手書き・写真などからの場合は 5,000円</td></tr>
+  <tr><td>特急</td><td>通常料金 +20〜40%（ご相談）</td></tr>
+</table>
+<div class="note">加工時間は、切る線の長さと深さ（パスの回数）から計算します。細かい部品が多い・輪郭が長いほど時間が増えます。小さい部品（100×100mm 未満、または幅 50mm 未満）は仕上がりをきれいにするため3工程で切るので、その分の時間が入ります。</div>
+
+<h2><span class="n">13</span>テンプレートDXFをダウンロード</h2>
+<p class="lead">レイヤー分け済み・板の枠（36版・48版）入りのテンプレートです。これをベースに作図するのが確実です。使わない板の枠は消すか、そのままでも構いません（部品が入っていない枠は数えません）。</p>
+<p><a class="dl" href="downloads/FABNODE_Template.dxf" download>▼ テンプレートDXFをダウンロード</a></p>
+<p style="margin-top:14px"><a href="estimate.html">▶ Web見積もりでデータを確認する</a></p>
+
+<div class="foot">FABNODE データ作成ガイド（2026-10 更新）／ 数値は φ6mm・φ12mm 工具基準。仕様は予告なく更新される場合があります。</div>
+
+</div>
+</body>
+</html>

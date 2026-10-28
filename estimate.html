@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web見積もり（準備中） — FABNODE</title>
-  <meta name="description" content="FABNODEのWeb見積もり機能は現在準備中です。お見積もりはお問い合わせフォームより承ります。">
+  <title>Web見積もり — FABNODE</title>
+  <meta name="description" content="DXFデータをアップロードするだけで、CNC加工の概算見積もりがその場で分かります。手書きや写真からのご相談も受け付けています。">
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
@@ -16,10 +16,11 @@
     gtag('js', new Date());
     gtag('config', 'G-3MPX3DD8X1');
   </script>
+  <script type="module" crossorigin src="/estimate-assets/estimate-BMXyK_Qc.js"></script>
+  <link rel="stylesheet" crossorigin href="/estimate-assets/estimate-BQf2pKyV.css">
 </head>
 <body>
 
-  <!-- Header -->
   <header class="header">
     <div class="container">
       <a href="/" class="logo">FAB<span>NODE</span></a>
@@ -38,29 +39,8 @@
     </div>
   </header>
 
-  <!-- Coming Soon -->
-  <section class="coming-soon">
-    <div class="container">
-      <div class="coming-soon__icon">🚧</div>
-      <span class="coming-soon__label">Coming Soon</span>
-      <h1>Web見積もり機能は準備中です</h1>
-      <p>
-        DXFファイルをアップロードするだけで加工費を自動計算する<br>
-        「Web見積もり」機能は、ただいま開発中です。<br>
-        公開までもうしばらくお待ちください。
-      </p>
-      <p class="coming-soon__sub">
-        お急ぎのお見積もりは、お問い合わせフォームより承ります。<br>
-        DXFデータや図面をお送りいただければ、担当より概算をご案内します。
-      </p>
-      <div class="cta-buttons">
-        <a href="contact.html" class="btn btn-primary">お問い合わせ</a>
-        <a href="index.html" class="btn btn-outline">トップに戻る</a>
-      </div>
-    </div>
-  </section>
+  <main id="estimate-root"></main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -89,14 +69,15 @@
   </footer>
 
   <script>
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => links.classList.toggle('active'));
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('active')));
-    window.addEventListener('scroll', () => {
-      document.querySelector('.header').style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.15)' : 'none';
-    });
+    (function () {
+      var toggle = document.getElementById('navToggle');
+      var links = document.getElementById('navLinks');
+      toggle.addEventListener('click', function () { links.classList.toggle('active'); });
+      links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { links.classList.remove('active'); }); });
+      window.addEventListener('scroll', function () {
+        document.querySelector('.header').style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.15)' : 'none';
+      });
+    })();
   </script>
-
 </body>
 </html>
